@@ -1,9 +1,8 @@
 package com.severstal.infocom.TestingRobot;
 
-import com.severstal.infocom.TestingRobot.Configuration.StartupSetting;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import javax.sql.rowset.CachedRowSet;
+import com.severstal.infocom.TestingRobot.Core.Configuration.Beans.BeansLoader;
+import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.StartupSetting;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Hello world!
@@ -11,22 +10,17 @@ import javax.sql.rowset.CachedRowSet;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-
-        FileSystemXmlApplicationContext context =
-         new FileSystemXmlApplicationContext(
-                 "E:\\Projects\\AppConfigs\\TestRobot\\Dependencies"
-                         + "\\Dependencies.xml"
-        );
-
-        StartupSetting setting = context.getBean("Startup",
-                StartupSetting.class);
-
+    public static void main( String[] args ) {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(BeansLoader.class);
+        StartupSetting setting = (StartupSetting) context.getBean("startupSetting");
         try {
-            setting.startDriver();
+            setting.startWinDriver();
         } catch (Exception ex) {
-            //
+            ex.printStackTrace();
         }
+
+        System.out.println(setting.getDriverLocation());
+        System.out.println(System.getProperty("user.dir"));
     }
 }

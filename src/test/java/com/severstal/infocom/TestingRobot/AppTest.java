@@ -2,8 +2,8 @@ package com.severstal.infocom.TestingRobot;
 
 
 import io.appium.java_client.AppiumDriver;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -19,6 +19,7 @@ public class AppTest
      * Rigorous Test :-)
      */
     @Test
+    @Disabled
     public void testAppium() throws Exception{
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Windows");
@@ -27,6 +28,11 @@ public class AppTest
         caps.setCapability("app", "C:\\Program Files\\yWorks\\yEd\\yEd.exe");
         driver = new AppiumDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
         driver.findElementsByName("Свернуть").get(0).click();
+
+    }
+
+    @Test
+    public void testWinApi() {
 
     }
 }

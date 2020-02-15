@@ -1,6 +1,6 @@
 package com.severstal.infocom.TestingRobot.StartupConfiguration;
 
-import com.severstal.infocom.TestingRobot.Configuration.StartupSetting;
+import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.StartupSetting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
