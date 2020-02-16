@@ -1,6 +1,6 @@
 package com.severstal.infocom.TestingRobot.StartupConfiguration;
 
-import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.StartupSetting;
+import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.Startup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,8 @@ public class TestStartupConfiguration {
     /**
      * Экземпляр класса для проверки.
      */
-    private static final StartupSetting settings =
-            new StartupSetting();
+    private static final Startup settings =
+            new Startup();
 
     @Test
     @DisplayName("Проверка значений по умолчанию")

@@ -1,6 +1,6 @@
 package com.severstal.infocom.TestingRobot.Core.Configuration.Beans;
 
-import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.StartupSetting;
+import com.severstal.infocom.TestingRobot.Core.Configuration.Startup.Startup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,8 +45,8 @@ public class BeansLoader {
      */
     @Bean("startupSetting")
     @Scope("prototype")
-    public StartupSetting startSetting() {
-        return new StartupSetting(
+    public Startup startSetting() {
+        return new Startup(
                 driverPath,
                 driverStartCommand,
                 driverLocation);

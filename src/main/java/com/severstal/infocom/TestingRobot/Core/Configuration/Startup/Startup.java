@@ -1,5 +1,9 @@
 package com.severstal.infocom.TestingRobot.Core.Configuration.Startup;
 
+import com.severstal.infocom.TestingRobot.Core.Configuration.Enums.DriverType;
+import com.severstal.infocom.TestingRobot.Core.Logger.Logger;
+import org.openqa.selenium.NotFoundException;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -11,13 +15,16 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 
-public class StartupSetting {
+public class Startup {
 
 
     /**
      * Путь для драйвера.
      * <p>Для изменения полей по умолчанию<br>
-     * смотри resources/FrameworksPaths.properties</p>
+     * смотри AppConfigs
+     * /TestRobot
+     * /FrameWorks
+     * /FrameworksPaths.properties</p>
      */
     private String driverPath;
 
@@ -43,7 +50,7 @@ public class StartupSetting {
      * @param customDriverCommand Команда для запуска
      * @param customDriverLocation URL хаба
      */
-    public StartupSetting(
+    public Startup(
             final String customDriverPath,
             final String customDriverCommand,
             final String customDriverLocation
@@ -56,7 +63,7 @@ public class StartupSetting {
     /**
      * Конструктор по умолчанию.
      */
-    public StartupSetting() {
+    public Startup() {
         // Do nothing
     }
 
@@ -91,28 +98,69 @@ public class StartupSetting {
      */
     public void startWinDriver()
     throws Exception {
-        StringBuilder command = new StringBuilder();
-        command.append("cmd /c start ")
-                .append("\"\" ")
-                .append(buildLocation)
-                .append(driverPath)
-                .append(driverStartCommand);
+        Logger.setAction("Инициализация Appium");
+        String command = "cmd /c start "
+                + "\"\" "
+                + buildLocation
+                + driverPath
+                + driverStartCommand;
 
-        this.startSeleniumHub(
-                command
-                .toString());
+        Logger.setAction("Запуск драйвера");
+        this.startProcess(
+                command,
+                DriverType.Appium);
+    }
+
+    public void StartSelenium() {
+
+    }
+
+    private void startSeleniumHub() {
+
     }
 
     /**
      * Выполняет запуск процесса.
      * @param startCommand Комнда для запуска
+     * @param type Тип драйвера для проверки запуска
      * @throws Exception Пропуск исключений
      */
-    private void startSeleniumHub(
-            final String startCommand)
+    private void startProcess(
+            final String startCommand,
+            DriverType type)
     throws Exception {
        Runtime.
                 getRuntime().
                 exec(startCommand);
+       Logger.setAction("Ожидание запуска");
+       Thread.sleep(5000);
+       if(!this.checkProcessExist(type)) {
+           throw new NotFoundException("Процесс не запущен");
+       } else {
+           Logger.setResult("Процесс запущен успешно");
+       }
+    }
+
+    /**
+     * Проверка процесса.
+     * @param type Тип драйвера
+     * @return Запущен или нет процесс
+     * @throws Exception пропуск исключений
+     */
+    public boolean checkProcessExist(final DriverType type)
+    throws Exception {
+        Process process = Runtime.getRuntime().exec("tasklist");
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                        process.getInputStream()));
+
+        while (reader.readLine() != null) {
+            if(reader.readLine()
+                    .contains(type.value())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
