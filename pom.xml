@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>5.2.3.RELEASE</version>
+      <version>5.2.20.RELEASE</version>
     </dependency>
       <!-- https://mvnrepository.com/artifact/com.sun.jna/jna -->
     <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
